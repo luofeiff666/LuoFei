@@ -2,6 +2,7 @@ import jsonp from 'common/js/jsonp'
 import {commonParams, options} from './config'
 import axios from 'axios'
 
+// 获取轮播图信息
 export function getRecommend() {
   const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
 
@@ -14,6 +15,7 @@ export function getRecommend() {
   return jsonp(url, data, options)
 }
 
+// 获取推荐歌单信息
 export function getDiscList() {
   const url = '/api/getDiscList'
 
@@ -28,11 +30,12 @@ export function getDiscList() {
     rnd: Math.random(),
     format: 'json'
   })
-
+  // 使用Jsonp无法解决 根据host来源返回数据 所以请求是返回500错误--前端无法解决
+  // return jsonp(url, data, options)
+  // 使用axios后端代理
   return axios.get(url, {
     params: data
   }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
-
