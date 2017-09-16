@@ -1,6 +1,7 @@
 <template>
   <div class="singer">
-    歌手页面
+    <!-- //  ListView是驼峰 所以list-view通过:data="singers"把数据传递过去 -->
+    <list-view :data="singers"></list-view>
   </div>
 </template>
 
@@ -8,36 +9,93 @@
   import {ERR_OK} from 'api/config'
   import {getSingerList} from 'api/singer'
 
+  // 构造函数解决重复avatar 头像数据的重复书写
+  import Singer from 'common/js/singer'
+  import ListView from 'base/listview/listview'
+
+  const HOT_NAME = '热门'
+  // 热门歌手信息定义成前10条
+  const HOT_SINGER_LEN = 10
+
   export default {
     data() {
       return {
         singers: []
       }
     },
+    components: {
+      ListView
+    },
     created() {
       this._getSingerList()
     },
     methods: {
       _getSingerList() {
-        console.log(getSingerList())
         getSingerList().then((res) => {
           if (res.code === ERR_OK) {
-            this.singers = res.data.list
-            console.log(res.data)
+            let data = res.data.list
+            this.singers = this._normalizeSinger(data)
           }
         })
+      },
+      _normalizeSinger(list) {
+        let map = {
+          // 歌手数据
+          hot: {
+            title: HOT_NAME,
+            items: []
+          }
+        }
+        list.forEach((item, index) => {
+          // 热门
+          if (index < HOT_SINGER_LEN) {
+            map.hot.items.push(new Singer({
+              id: item.Fsinger_mid,
+              name: item.Fsinger_name
+            }))
+          }
+          // Findex用于区分首字母
+          const key = item.Findex
+          // 如果没有热门 那么创建一个热门对象集合
+          if (!map[key]) {
+            map[key] = {
+              title: key,
+              items: []
+            }
+          }
+          // 排序
+          map[key].items.push(new Singer({
+            id: item.Fsinger_mid,
+            name: item.Fsinger_name
+          }))
+        })
+        // 为了得到有序列表 需要处理map
+        let hot = []
+        let ret = []
+
+        for (let key in map) {
+          let val = map[key]
+          if (val.title.match(/[a-zA-Z]/)) {
+            ret.push(val)
+          } else if (val.title === HOT_NAME) {
+            hot.push(val)
+          }
+        }
+        // 排序
+        ret.sort((a, b) => {
+          return a.title.charCodeAt(0) - b.title.charCodeAt(0)
+        })
+        return hot.concat(ret)
       }
     }
   }
-
 </script>
 
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  @import "~common/stylus/variable"
   .singer
     position: fixed
-    top: 0
+    top: 88px
     bottom: 0
     width: 100%
 </style>

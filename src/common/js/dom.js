@@ -17,3 +17,15 @@ export function addClass(el, className) {
   // 数组 然后把class 用空白隔开传进去
   el.className = newClass.join(' ')
 }
+
+// 获取:data属性的变量
+export function getData(el, name, val) {
+  const prefix = 'data-'
+  name = prefix + name
+  // 如果传入val那么就是设置自定义属性
+  if (val) {
+    return el.setAttribute(prefix + name, val)
+  } else {
+    return el.getAttribute(name)
+  }
+}
