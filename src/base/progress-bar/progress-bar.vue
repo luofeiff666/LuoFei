@@ -45,7 +45,11 @@ export default {
     },
     // 点击改变进度条
     progressClick(e) {
-      this._offset(e.offsetX)
+      const rect = this.$refs.progressBar.getBoundingClientRect()
+      const offsetWidth = e.pageX - rect.left
+      this._offset(offsetWidth)
+      // 这里当我们点击progressBtn 的时候 e.offsetX获取不对
+      //  this._offset(e.offsetX)
       this._trigerPercent()
     },
     // 派发一个事件拖动改变播放百分比
