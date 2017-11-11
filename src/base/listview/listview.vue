@@ -114,6 +114,9 @@ export default {
       // 调用滑动动画
       this._scrollTo(anchorIndex)
     },
+    refresh() {
+      this.$refs.listview.refresh()
+    },
     scroll(pos) {
       this.scrollY = pos.y
     },
