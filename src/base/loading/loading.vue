@@ -10,7 +10,7 @@
     props: {
       title: {
         type: String,
-        deault: '努力载入中^_^---'
+        default: '努力载入中...'
       }
     }
   }
