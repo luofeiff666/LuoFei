@@ -1,125 +1,112 @@
 <template>
-    <div class="player" v-show="playlist.length > 0">
-        <!-- 动画钩子函数 transition上监听事件 -->
-        <transition name="normal"
-                    @enter="enter"
-                    @after-enter="afterEnter"
-                    @leave="leave"
-                    @after-leave="afterLeave"
-                    >
-            <!-- 满屏播放器 -->
-            <div class="normal-player" v-show="fullScreen">
-                <!-- 背景图 -->
-                <div class="background">
-                  <!-- 铺满 -->
-                  <img :src="currentSong.image" width="100%" height="100%">
-                </div>
-                <!-- 顶部返回按钮 歌名和歌手名  -->
-                <div class="top">
-                  <div class="back" @click="back">
-                    <i class="icon-back"></i>
-                  </div>
-                  <div ref="cdOff" class="cd-off"></div>
-                </div>
-                <!-- 唱片 一张歌曲图 -->
-                <div class="middle"
-                      @touchstart.prevent="middleTouchStart"
-                      @touchmove.prevent="middleTouchMove"
-                      @touchend="middleTouchEnd">
-                    <div class="middle-l" ref="middleL">
-                        <div class="cd-wrapper" ref="cdWrapper">
-                            <play-cd :currentSong="currentSong" :playing="playing"></play-cd>
-                        </div>
-                        <div class="singer-title">
-                            <h1 class="title" v-html="currentSong.name"></h1>
-                            <h2 class="subtitle" v-html="currentSong.singer"></h2>
-                        </div>
-                        <div class="playing-lyric-wrapper">
-                            <div class="playing-lyric">{{playingLyric}}</div>
-                        </div>
-                    </div>
-                    <!-- 歌词 -->
-                    <scroll @click.stop class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines">
-                        <div class="lyric-wrapper">
-                          <div v-if="currentLyric">
-                            <p ref="lyricLine"
-                               class="text"
-                               :class="{'current': currentLineNum ===index}"
-                               v-for="(line,index) in currentLyric.lines">{{line.txt}}</p>
-                          </div>
-                        </div>
-                    </scroll>
-                </div>
-                
-                <!-- 操作区 -->
-                <div class="bottom">
-                    <div class="dot-wrapper">
-                        <span class="dot" :class="{'active':currentShow === 'cd'}"></span>    
-                        <span class="dot" :class="{'active':currentShow === 'lyric'}"></span>    
-                    </div>
-                    <!-- 进度条 -->
-                    <div class="progress-wrapper">
-                        <span class="time time-l">{{format(currentTime)}}</span>
-                        <div class="progress-bar-wrapper">
-                            <progress-bar @percentChange="onPercentBarChange" :percent="percent"></progress-bar>    
-                        </div>
-                        <span class="time time-r">{{format(currentSong.duration)}}</span>    
-                    </div>
-                    <div class="operators">
-                    <!-- 播放模式icon -->
-                    <div class="icon i-left" @click="changeMode">
-                        <i :class="iconMode"></i>
-                    </div>
-                    <!-- 播放上一首icon -->
-                    <div class="icon i-left" :class="disableCls">
-                        <i @click="prev" class="icon-prev" ></i>
-                    </div>
-                    <!-- 播放暂停icon -->
-                    <div class="icon i-center" :class="disableCls">
-                        <i :class="playIcon" @click="togglePlaying"></i>
-                    </div>
-                    <!-- 播放下一首icon -->
-                    <div class="icon i-right" :class="disableCls">
-                        <i @click="next" class="icon-next"></i>
-                    </div>
-                    <!-- 喜好收藏 -->
-                    <div class="icon i-right">
-                        <i @click="toggleFavorite(currentSong)" :class="getFavoriteIcon(currentSong)"></i>
-                    </div>
-                    </div>
-                </div>
+  <div class="player" v-show="playlist.length > 0">
+    <!-- 动画钩子函数 transition上监听事件 -->
+    <transition name="normal" @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
+      <!-- 满屏播放器 -->
+      <div class="normal-player" v-show="fullScreen">
+        <!-- 背景图 -->
+        <div class="background">
+          <!-- 铺满 -->
+          <img :src="currentSong.image" width="100%" height="100%">
+        </div>
+        <!-- 顶部返回按钮 歌名和歌手名  -->
+        <div class="top">
+          <div class="back" @click="back">
+            <i class="icon-back"></i>
+          </div>
+          <div ref="cdOff" class="cd-off"></div>
+        </div>
+        <!-- 唱片 一张歌曲图 -->
+        <div class="middle" @touchstart.prevent="middleTouchStart" @touchmove.prevent="middleTouchMove" @touchend="middleTouchEnd">
+          <div class="middle-l" ref="middleL">
+            <div class="cd-wrapper" ref="cdWrapper">
+              <play-cd :currentSong="currentSong" :playing="playing"></play-cd>
             </div>
-        </transition>
-        <transition name="mini">
-            <!-- mini播放器 -->
-            <div class="mini-player" v-show="!fullScreen" @click="open">
-                <div class="icon">
-                    <div class="imgWrapper">
-                         <img :class="cdCls" width="40" height="40" :src="currentSong.image">
-                    </div>     
-                </div>
-                <div class="text">
-                    <h2 class="name" v-html="currentSong.name
-                    "></h2>
-                    <p class="desc" v-html="currentSong.singer
-                    "></p>
-                </div>
-                <div class="control">
-                    <progress-circle :percent="percent" :radius="radius">
-                        <i class="icon-mini" @click.stop="togglePlaying" :class="miniIcon"></i>
-                    </progress-circle>
-                </div>
-                <!-- playlist -->
-                <div class="control">
-                    <i class="icon-playlist" @click.stop="showPlayList"></i>
-                </div>
+            <div class="singer-title">
+              <h1 class="title" v-html="currentSong.name"></h1>
+              <h2 class="subtitle" v-html="currentSong.singer"></h2>
             </div>
-        </transition>
-        <playlist ref="playlist"></playlist> 
-        <!-- 当可以播放歌曲会ready 监听这歌事件 -->
-        <audio :src="playUrl" ref="audio" @play="ready" @error="error" @timeupdate="updateTime" @ended="end">
-        </audio>
-    </div>
+            <div class="playing-lyric-wrapper">
+              <div class="playing-lyric">{{playingLyric}}</div>
+            </div>
+          </div>
+          <!-- 歌词 -->
+          <scroll @click.stop class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines">
+            <div class="lyric-wrapper">
+              <div v-if="currentLyric">
+                <p ref="lyricLine" class="text" :class="{'current': currentLineNum ===index}" v-for="(line,index) in currentLyric.lines">{{line.txt}}</p>
+              </div>
+            </div>
+          </scroll>
+        </div>
+
+        <!-- 操作区 -->
+        <div class="bottom">
+          <div class="dot-wrapper">
+            <span class="dot" :class="{'active':currentShow === 'cd'}"></span>
+            <span class="dot" :class="{'active':currentShow === 'lyric'}"></span>
+          </div>
+          <!-- 进度条 -->
+          <div class="progress-wrapper">
+            <span class="time time-l">{{format(currentTime)}}</span>
+            <div class="progress-bar-wrapper">
+              <progress-bar @percentChange="onPercentBarChange" :percent="percent"></progress-bar>
+            </div>
+            <span class="time time-r">{{format(currentSong.duration)}}</span>
+          </div>
+          <div class="operators">
+            <!-- 播放模式icon -->
+            <div class="icon i-left" @click="changeMode">
+              <i :class="iconMode"></i>
+            </div>
+            <!-- 播放上一首icon -->
+            <div class="icon i-left" :class="disableCls">
+              <i @click="prev" class="icon-prev"></i>
+            </div>
+            <!-- 播放暂停icon -->
+            <div class="icon i-center" :class="disableCls">
+              <i :class="playIcon" @click="togglePlaying"></i>
+            </div>
+            <!-- 播放下一首icon -->
+            <div class="icon i-right" :class="disableCls">
+              <i @click="next" class="icon-next"></i>
+            </div>
+            <!-- 喜好收藏 -->
+            <div class="icon i-right">
+              <i @click="toggleFavorite(currentSong)" :class="getFavoriteIcon(currentSong)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+    <transition name="mini">
+      <!-- mini播放器 -->
+      <div class="mini-player" v-show="!fullScreen" @click="open">
+        <div class="icon">
+          <div class="imgWrapper">
+            <img :class="cdCls" width="40" height="40" :src="currentSong.image">
+          </div>
+        </div>
+        <div class="text">
+          <h2 class="name" v-html="currentSong.name"></h2>
+          <p class="desc" v-html="currentSong.singer"></p>
+        </div>
+        <div class="control">
+          <progress-circle :percent="percent" :radius="radius">
+            <i class="icon-mini" @click.stop="togglePlaying" :class="miniIcon"></i>
+          </progress-circle>
+        </div>
+        <!-- playlist -->
+        <div class="control">
+          <i class="icon-playlist" @click.stop="showPlayList"></i>
+        </div>
+      </div>
+    </transition>
+    <playlist ref="playlist"></playlist>
+    <!-- 当可以播放歌曲会ready 监听这歌事件 -->
+    <audio :src="playUrl" ref="audio" @play="ready" @error="error" @timeupdate="updateTime" @ended="end">
+    </audio>
+  </div>
 </template>
 <script type="text/ecmascript-6">
 import { mapGetters, mapMutations, mapActions } from 'vuex'
@@ -605,7 +592,7 @@ export default {
     .top {
       position: relative;
       margin-bottom: 25px;
-      z-index: 40 
+      z-index: 2;
 
       .back {
         position: absolute;
