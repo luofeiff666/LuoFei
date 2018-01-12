@@ -25,7 +25,7 @@ export default {}
     .icon {
         display: inline-block;
         vertical-align: top;
-        margin-top: 6;
+        margin-top: 6px;
         width: 30px;
         height: 32px;
         margin-right: 9px;
