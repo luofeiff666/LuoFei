@@ -11,28 +11,28 @@
             <div class="normal-player" v-show="fullScreen">
                 <!-- 背景图 -->
                 <div class="background">
-                <!-- 铺满 -->
-                <img :src="currentSong.image" width="100%" height="100%">
+                  <!-- 铺满 -->
+                  <img :src="currentSong.image" width="100%" height="100%">
                 </div>
                 <!-- 顶部返回按钮 歌名和歌手名  -->
                 <div class="top">
-                <div class="back" @click="back">
+                  <div class="back" @click="back">
                     <i class="icon-back"></i>
-                </div>
-                <h1 class="title" v-html="currentSong.name"></h1>
-                <h2 class="subtitle" v-html="currentSong.singer
-                "></h2>
+                  </div>
+                  <div ref="cdOff" class="cd-off"></div>
                 </div>
                 <!-- 唱片 一张歌曲图 -->
                 <div class="middle"
-                @touchstart.prevent="middleTouchStart"
-             @touchmove.prevent="middleTouchMove"
-             @touchend="middleTouchEnd">
+                      @touchstart.prevent="middleTouchStart"
+                      @touchmove.prevent="middleTouchMove"
+                      @touchend="middleTouchEnd">
                     <div class="middle-l" ref="middleL">
                         <div class="cd-wrapper" ref="cdWrapper">
-                            <div class="cd" :class="cdCls">
-                                <img class="image" :src="currentSong.image">
-                            </div>
+                            <play-cd :currentSong="currentSong" :playing="playing"></play-cd>
+                        </div>
+                        <div class="singer-title">
+                            <h1 class="title" v-html="currentSong.name"></h1>
+                            <h2 class="subtitle" v-html="currentSong.singer"></h2>
                         </div>
                         <div class="playing-lyric-wrapper">
                             <div class="playing-lyric">{{playingLyric}}</div>
@@ -50,6 +50,7 @@
                         </div>
                     </scroll>
                 </div>
+                
                 <!-- 操作区 -->
                 <div class="bottom">
                     <div class="dot-wrapper">
@@ -131,6 +132,7 @@ import Scroll from 'base/scroll/scroll'
 import Playlist from 'components/playlist/playlist'
 import { playMode } from 'common/js/config'
 import { playerMixin } from 'common/js/mixin'
+import PlayCd from 'base/play-cd/play-cd'
 
 const transform = prefixStyle('transform')
 const transitionDuration = prefixStyle('transitionDuration')
@@ -153,13 +155,12 @@ export default {
     }
   },
   computed: {
+    cdCls() {
+      return this.playing ? 'play' : 'play pause'
+    },
     // 当前播放时间和歌曲的总时间百分比
     percent() {
       return this.currentTime / this.currentSong.duration
-    },
-    // cd的转动动画
-    cdCls() {
-      return this.playing ? 'play' : 'play pause'
     },
     // 播放class样式
     playIcon() {
@@ -228,6 +229,7 @@ export default {
       this.touch.percent = Math.abs(offsetWidth / window.innerWidth)
       this.$refs.lyricList.$el.style[transitionDuration] = 0
       this.$refs.middleL.style.opacity = 1 - this.touch.percent
+      this.$refs.cdOff.style.opacity = 1 - this.touch.percent
       this.$refs.middleL.style[transitionDuration] = 0
     },
     // 决定停在的位置
@@ -265,6 +267,7 @@ export default {
       this.$refs.lyricList.$el.style.transform = `translate3d(${offsetWidth}px,0,0)`
       this.$refs.lyricList.$el.style[transitionDuration] = `${time}ms`
       this.$refs.middleL.style.opacity = opacity
+      this.$refs.cdOff.style.opacity = opacity
       this.$refs.lyricList.$el.style[transitionDuration] = `${time}ms`
       this.touch.initiated = false
     },
@@ -412,6 +415,11 @@ export default {
           this.currentLyric = new Lyric(lyric, this.handleLyric)
           if (this.playing) {
             this.currentLyric.play()
+          }
+          // 没有歌词时
+          if (this.currentLyric.lines.length === 0) {
+            this.currentLyric = null
+            this.playingLyric = '此歌曲为没有填词的纯音乐，请您欣赏'
           }
         })
         .catch(() => {
@@ -564,7 +572,8 @@ export default {
     ProgressBar,
     ProgressCircle,
     Scroll,
-    Playlist
+    Playlist,
+    PlayCd
   }
 }
 </script>
@@ -596,6 +605,7 @@ export default {
     .top {
       position: relative;
       margin-bottom: 25px;
+      z-index: 40 
 
       .back {
         position: absolute;
@@ -612,28 +622,22 @@ export default {
         }
       }
 
-      .title {
-        width: 70%;
-        margin: 0 auto;
-        line-height: 40px;
-        text-align: center;
-        no-wrap();
-        font-size: $font-size-large;
-        color: $color-text;
-      }
-
-      .subtitle {
-        line-height: 20px;
-        text-align: center;
-        font-size: $font-size-medium;
-        color: $color-text;
+      .cd-off {
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        width: 25%;
+        height: 200px;
+        z-index: 40;
+        background: url('disc-off.png') no-repeat;
+        background-size: contain;
       }
     }
 
     .middle {
       position: fixed;
       width: 100%;
-      top: 80px;
+      top: 40px;
       bottom: 170px;
       white-space: nowrap;
       font-size: 0;
@@ -648,41 +652,40 @@ export default {
 
         .cd-wrapper {
           position: absolute;
-          left: 15%;
+          left: 10%;
           top: 0;
           width: 80%;
           box-sizing: border-box;
           height: 100%;
+        }
 
-          .cd {
-            width: 90%;
-            height: 90%;
-            border-radius: 50%;
+        .singer-title {
+          width: 80%;
+          margin: 10px auto 0 auto;
+          overflow: hidden;
+          text-align: center;
 
-            .image {
-              position: absolute;
-              left: 0;
-              top: 0;
-              width: 100%;
-              height: 100%;
-              box-sizing: border-box;
-              border-radius: 50%;
-              border: 10px solid rgba(255, 255, 255, 0.1);
-            }
+          .title {
+            width: 70%;
+            margin: 0 auto;
+            line-height: 30px;
+            text-align: center;
+            no-wrap();
+            font-size: $font-size-large;
+            color: $color-text-ll;
+          }
 
-            &.play {
-              animation: rotate 20s linear infinite;
-            }
-
-            &.pause {
-              animation-play-state: paused;
-            }
+          .subtitle {
+            line-height: 20px;
+            text-align: center;
+            font-size: $font-size-medium;
+            color: $color-text-ll;
           }
         }
 
         .playing-lyric-wrapper {
           width: 80%;
-          margin: 10px auto 0 auto;
+          margin: 5px auto 0 auto;
           overflow: hidden;
           text-align: center;
 
@@ -730,7 +733,7 @@ export default {
 
     .bottom {
       position: absolute;
-      bottom: 50px;
+      bottom: 15px;
       width: 100%;
 
       .dot-wrapper {
@@ -759,7 +762,7 @@ export default {
         align-items: center;
         width: 80%;
         margin: 0px auto;
-        padding: 10px 0;
+        padding: 5px 0;
 
         .time {
           color: $color-text;
