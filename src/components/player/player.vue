@@ -652,14 +652,14 @@ export default {
 
         .singer-title {
           width: 80%;
-          margin: 60px auto 0 auto;
+          margin: 20px auto 0 auto;
           overflow: hidden;
           text-align: center;
 
           .title {
             width: 70%;
-            margin: 30px auto;
-            line-height: 60px;
+            margin: 10px auto;
+            line-height: 30px;
             text-align: center;
             no-wrap();
             font-size: $font-size-large;
@@ -667,7 +667,7 @@ export default {
           }
 
           .subtitle {
-            line-height: 40px;
+            line-height: 30px;
             text-align: center;
             font-size: $font-size-medium;
             color: $color-text-ll;
@@ -676,13 +676,13 @@ export default {
 
         .playing-lyric-wrapper {
           width: 80%;
-          margin: 40px auto 0 auto;
+          margin: 20px auto 0 auto;
           overflow: hidden;
           text-align: center;
 
           .playing-lyric {
-            height: 60px;
-            line-height: 60px;
+            height: 30px;
+            line-height: 30px;
             font-size: $font-size-medium;
             color: $color-text-l;
           }

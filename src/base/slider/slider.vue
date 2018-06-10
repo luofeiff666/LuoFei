@@ -193,7 +193,7 @@ export default {
     .dot {
       display: inline-block;
       margin: 0 8px;
-      width: 8px;
+      width: 16px;
       height: 16px;
       border-radius: 50%;
       background-color: $color-text-l;
