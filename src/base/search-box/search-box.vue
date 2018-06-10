@@ -52,19 +52,19 @@ export default {
     box-sizing: border-box;
     width: 100%;
     padding: 0 6px;
-    height: 40px;
+    height: 80px;
     background: $color-highlight-background;
-    border-radius: 6px;
+    border-radius: 12px;
 
     .icon-search {
-        font-size: 24px;
+        font-size: 48px;
         color: $color-background;
     }
 
     .box {
         flex: 1;
-        margin: 0 5px;
-        line-height: 18px;
+        margin: 0 10px;
+        line-height: 36px;
         background: $color-highlight-background;
         color: $color-text;
         font-size: $font-size-medium;
@@ -77,7 +77,7 @@ export default {
     }
 
     .icon-dismiss {
-        font-size: 16px;
+        font-size: 32px;
         color: $color-background;
     }
 }

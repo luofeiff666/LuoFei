@@ -2,7 +2,7 @@
     <div class="song-list">
         <ul>
             <li class="item" v-for="(song, index) in songs" 
-            @click="selectItem(song, index)">
+            @click="selectItem(song, index)" :key="index">
                 <div class="rank" v-show="rank">
                   <span :class="getRankCls(index)">{{getRankText(index)}}</span>  
                 </div>
@@ -60,20 +60,20 @@ export default {
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    height: 64px;
+    height: 128px;
     font-size: $font-size-medium;
 
     .rank {
-      flex: 0 0 25px;
-      width: 25px;
-      margin-right: 30px;
+      flex: 0 0 50px;
+      width: 50px;
+      margin-right: 60px;
       text-align: center;
 
       .icon {
         display: inline-block;
-        width: 25px;
-        height: 24px;
-        background-size: 25px 24px;
+        width: 50px;
+        height: 48px;
+        background-size: 50px 48px;
 
         &.icon0 {
           bg-image('first');
@@ -96,7 +96,7 @@ export default {
 
     .content {
       flex: 1;
-      line-height: 20px;
+      line-height: 40px;
       overflow: hidden;
 
       .name {
@@ -106,7 +106,7 @@ export default {
 
       .desc {
         no-wrap();
-        margin-top: 4px;
+        margin-top: 8px;
         color: $color-text-d;
       }
     }

@@ -7,10 +7,10 @@
     :probeType="probeType"
     >
         <ul>
-            <li v-for="group in data" class="list-group" ref="listGroup">
-                <h2 class="list-group-title">{{group.title}}</h2>
+            <li v-for="(group, index) in data" class="list-group" ref="listGroup" :key="index">
+                <h2 ref="TITLE_HEIGHT" class="list-group-title">{{group.title}}</h2>
                 <ul>
-                    <li @click="selectItem(item)" class="list-group-item" v-for="item in group.items">
+                    <li @click="selectItem(item)" class="list-group-item" v-for="(item, index) in group.items" :key="index">
                         <img class="avatar" v-lazy="item.avatar">
                         <span class="name">{{item.name}}</span>
                     </li>
@@ -21,8 +21,8 @@
         @touchmove.stop.prevent="onShortcutTouchMove">
             <ul>
                 <!-- 获取index -->
-                <li class="item" v-for="(item, index) in shortcutList" :data-index="index"
-                :class="{'current':currentIndex === index}">
+                <li ref="ANCHOR_HEIGHT" class="item" v-for="(item, index) in shortcutList" :data-index="index"
+                :class="{'current':currentIndex === index}" :key="index">
                     {{item}}
                 </li>
             </ul>
@@ -41,9 +41,8 @@ import { getData } from 'common/js/dom'
 import Loading from 'base/loading/loading'
 // CSS里面写好的 取来的常量
 // 锚点高度
-const ANCHOR_HEIGHT = 18
+// const ANCHOR_HEIGHT = 18
 // title高度
-const TITLE_HEIGHT = 30
 export default {
   created() {
     this.touch = {}
@@ -113,6 +112,8 @@ export default {
       this.touch.y2 = firstTouch.pageY
       // 计算出Y轴偏移量 移了几个锚点 锚点样式是18px高度
       // |0 相当于向下取整
+      let ANCHOR_HEIGHT = this.$refs.ANCHOR_HEIGHT[0].clientHeight
+      console.log(ANCHOR_HEIGHT)
       let delta = ((this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT) | 0
       // 最开始触碰时取得的锚点+偏移量(滑过了几个锚点)
       // 数值转换进行计算
@@ -189,6 +190,7 @@ export default {
       // diff的newVal大于零
       // 小于title高度 那么就取减去title高度 大于title高度那么就偏移量0 就是会还原到初始位置并不做动画
       // 得到了动画偏移量
+      let TITLE_HEIGHT = this.$refs.TITLE_HEIGHT[0].clientHeight
       let fixedTop =
         newVal > 0 && newVal < TITLE_HEIGHT ? newVal - TITLE_HEIGHT : 0
       // 性能优化 当this.fixedTop为0时的限制 不执行下面代码不做动画
@@ -217,12 +219,12 @@ export default {
   background: $color-background;
 
   .list-group {
-    padding-bottom: 30px;
+    padding-bottom: 60px;
 
     .list-group-title {
-      height: 30px;
-      line-height: 30px;
-      padding-left: 20px;
+      height: 60px;
+      line-height: 60px;
+      padding-left: 40px;
       font-size: $font-size-small;
       color: $color-text-l;
       background: $color-highlight-background;
@@ -232,18 +234,18 @@ export default {
       // 里面子元素居中
       display: flex;
       align-items: center;
-      padding: 20px 0 0 30px;
+      padding: 40px 0 0 60px;
 
       // 图片样式
       .avatar {
-        width: 50px;
-        height: 50px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
       }
 
       // 名字
       .name {
-        margin-left: 20px;
+        margin-left: 40px;
         color: $color-text-l;
         font-size: $font-size-medium;
       }
@@ -259,16 +261,16 @@ export default {
     // 垂直居中
     top: 50%;
     transform: translateY(-50%);
-    width: 20px;
-    padding: 20px 0;
-    border-radius: 10px;
+    width: 40px;
+    padding: 40px 0;
+    border-radius: 20px;
     text-align: center;
     background: $color-background-d;
     font-family: Helvetica;
 
     // 
     .item {
-      padding: 3px;
+      padding: 6px;
       line-height: 1;
       color: $color-text-l;
       font-size: $font-size-small;
@@ -288,9 +290,9 @@ export default {
     width: 100%;
 
     .fixed-title {
-      height: 30px;
-      line-height: 30px;
-      padding-left: 20px;
+      height: 60px;
+      line-height: 60px;
+      padding-left: 40px;
       font-size: $font-size-small;
       color: $color-text-l;
       background: $color-highlight-background;

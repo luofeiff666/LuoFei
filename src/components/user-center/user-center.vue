@@ -71,7 +71,7 @@ export default {
   methods: {
     // scroll重新refresh
     handlePlaylist(playlist) {
-      const bottom = playlist.length > 0 ? '60px' : 0
+      const bottom = playlist.length > 0 ? '120px' : 0
       this.$refs.listWrapper.style.bottom = bottom
       // 当存在才去refresh 不是当前页面就不用refresh避免报错
       this.$refs.favoriteList && this.$refs.favoriteList.refresh()
@@ -133,36 +133,36 @@ export default {
     .back {
         position: absolute;
         top: 0;
-        left: 6px;
+        left: 12px;
         z-index: 50;
 
         .icon-back {
             display: block;
-            padding: 10px;
+            padding: 20px;
             font-size: $font-size-large-x;
             color: $color-theme;
         }
     }
 
     .switches-wrapper {
-        margin: 10px 0 30px 0;
+        margin: 20px 0 60px 0;
     }
 
     .play-btn {
         box-sizing: border-box;
-        width: 135px;
-        padding: 7px 0;
+        width: 270px;
+        padding: 14px 0;
         margin: 0 auto;
         text-align: center;
         border: 1px solid $color-text-l;
         color: $color-text-l;
-        border-radius: 100px;
+        border-radius: 200px;
         font-size: 0;
 
         .icon-play {
             display: inline-block;
             vertical-align: middle;
-            margin-right: 6px;
+            margin-right: 12px;
             font-size: $font-size-medium-x;
         }
 
@@ -175,7 +175,7 @@ export default {
 
     .list-wrapper {
         position: absolute;
-        top: 110px;
+        top: 220px;
         bottom: 0;
         width: 100%;
 
@@ -184,7 +184,7 @@ export default {
             overflow: hidden;
 
             .list-inner {
-                padding: 20px 30px;
+                padding: 40px 60px;
             }
         }
     }

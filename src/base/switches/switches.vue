@@ -1,6 +1,6 @@
 <template>
     <ul class="switches">
-        <li class="switch-item" v-for="(item, index) in switches" :class="{'active':currentIndex === index}" @click="switchItem(index)">
+        <li class="switch-item" v-for="(item, index) in switches" :class="{'active':currentIndex === index}" @click="switchItem(index)" :key="index">
             <span>{{item.name}}</span>
         </li>
     </ul>
@@ -30,14 +30,14 @@ export default {
 .switches {
     display: flex;
     align-items: center;
-    width: 240px;
+    width: 480px;
     margin: 0 auto;
     border: 1px solid $color-highlight-background;
-    border-radius: 5px;
+    border-radius: 10px;
 
     .switch-item {
         flex: 1;
-        padding: 8px;
+        padding: 16px;
         text-align: center;
         font-size: $font-size-medium;
         color: $color-text-d;

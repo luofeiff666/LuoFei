@@ -15,7 +15,7 @@
 <script type="text/ecmascript-6">
 import { prefixStyle } from 'common/js/dom'
 // 写好的按钮固定宽度
-const progressBtnWidth = 16
+const progressBtnWidth = 32
 const transform = prefixStyle('transform')
 export default {
   props: {
@@ -96,12 +96,12 @@ export default {
 @import '~common/stylus/variable';
 
 .progress-bar {
-    height: 30px;
+    height: 60px;
 
     .bar-inner {
         position: relative;
-        top: 13px;
-        height: 4px;
+        top: 26px;
+        height: 8px;
         background: rgba(0, 0, 0, 0.3);
 
         .progress {
@@ -112,19 +112,19 @@ export default {
 
         .progress-btn-wrapper {
             position: absolute;
-            left: -8px;
-            top: -13px;
-            width: 30px;
-            height: 30px;
+            left: -16px;
+            top: -26px;
+            width: 60px;
+            height: 60px;
 
             .progress-btn {
                 position: relative;
-                top: 7px;
-                left: 7px;
+                top: 14px;
+                left: 14px;
                 box-sizing: border-box;
-                width: 16px;
-                height: 16px;
-                border: 3px solid $color-text;
+                width: 32px;
+                height: 32px;
+                border: 6px solid $color-text;
                 border-radius: 50%;
                 background: $color-sub-theme;
             }

@@ -2,12 +2,12 @@
     <div class="rank" ref="rank">
         <scroll ref="toplist" :data="topList" class="toplist">
             <ul>
-                <li class="item" v-for="item in topList" @click="selectItem(item)">
+                <li class="item" v-for="(item, index) in topList" @click="selectItem(item)" :key="index">
                     <div class="icon">
-                        <img v-lazy="item.picUrl" width="100" height="100">
+                        <img v-lazy="item.picUrl">
                     </div>
                     <ul class="songlist">
-                        <li class="song" v-for="(song, index) in item.songList">
+                        <li class="song" v-for="(song, index) in item.songList" :key="index">
                             <span>{{index + 1}}</span>
                             <span>{{song.songname}}-{{song.singername}}</span>
                         </li>
@@ -41,7 +41,7 @@ export default {
   methods: {
     // 当出现播放器那么就使列表高出底部60px
     handlePlaylist(playlist) {
-      const bottom = playlist.length > 0 ? '60px' : ''
+      const bottom = playlist.length > 0 ? '120px' : ''
       // 使得底部高出60ox
       this.$refs.rank.style.bottom = bottom
       this.$refs.toplist.refresh()
@@ -77,7 +77,7 @@ export default {
 .rank {
     position: fixed;
     width: 100%;
-    top: 88px;
+    top: 176px;
     bottom: 0;
 
     .toplist {
@@ -86,18 +86,22 @@ export default {
 
         .item {
             display: flex;
-            margin: 0 20px;
-            padding-top: 20px;
-            height: 100px;
+            margin: 0 40px;
+            padding-top: 40px;
+            height: 200px;
 
             &:last-child {
-                padding-bottom: 20px;
+                padding-bottom: 40px;
             }
 
             .icon {
-                flex: 0 0 100px;
-                width: 100px;
-                height: 100px;
+                img {
+                    width 200px
+                    height 200px
+                }
+                flex: 0 0 200px;
+                width: 200px;
+                height: 200px;
             }
 
             .songlist {
@@ -105,8 +109,8 @@ export default {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                padding: 0 20px;
-                height: 100px;
+                padding: 0 40px;
+                height: 200px;
                 overflow: hidden;
                 background: $color-highlight-background;
                 color: $color-text-d;
@@ -114,7 +118,7 @@ export default {
 
                 .song {
                     no-wrap();
-                    line-height: 26px;
+                    line-height: 52px;
                 }
             }
         }

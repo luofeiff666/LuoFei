@@ -1,6 +1,6 @@
 <template>
     <div class="loading">
-        <img width="24" height="24" src="./loading.gif">
+        <img src="./loading.gif">
         <P class="desc">{{title}}</P>
     </div>
 </template>
@@ -20,9 +20,13 @@ export default {
 .loading {
     width: 100%;
     text-align: center;
+    img{
+        width 48px
+        height 48px
+    }
 
     .desc {
-        line-height: 20px;
+        line-height: 40px;
         font-size: $font-size-small;
         color: $color-text-l;
     }

@@ -6,7 +6,7 @@
             <!-- v-if确保了 获取数据created 这个异步过程得到数据后  才开始正确的渲染slot插槽里面的结构不然slider组件里面mounted钩子函数先执行就无法得到正确的DOM -->
             <div v-if="slider.length" class="slider-wrapper">
                 <slider>
-                    <div v-for="item in slider">
+                    <div v-for="(item ,index) in slider" :key="index">
                         <a :href="item.linkUrl">
                             <!-- scroll组件的派发的click 与监听的fastclick冲突 拦截了click 需要点击可以在点击的元素上添加一个class属性 needsclick 可以是点击生效 -->
                             <img class="needsclick" @load="loadImage" :src="item.picUrl">
@@ -17,9 +17,9 @@
             <div class="recommend-list">
                 <h1 class="list-title">热门歌单推荐</h1>
                 <ul>
-                    <li v-for="item in discList" class="item" @click="selectItem(item)">
+                    <li v-for="(item,index) in discList" :key="index" class="item" @click="selectItem(item)">
                         <div class="icon">
-                            <img v-lazy="item.imgurl" width="60" height="60">
+                            <img v-lazy="item.imgurl">
                         </div>
                         <div class="text">
                             <span class="name" v-html="item.creator.name"></span>
@@ -62,7 +62,7 @@ export default {
   methods: {
     // 当出现播放器那么就使列表高出底部60px
     handlePlaylist(playlist) {
-      const bottom = playlist.length > 0 ? '60px' : ''
+      const bottom = playlist.length > 0 ? '120px' : ''
       // 使得底部高出60ox
       this.$refs.recommend.style.bottom = bottom
       this.$refs.scroll.refresh()
@@ -113,7 +113,7 @@ export default {
 .recommend {
     position: fixed;
     width: 100%;
-    top: 88px;
+    top: 176px;
     bottom: 0;
 
     .recommend-content {
@@ -129,11 +129,11 @@ export default {
         }
 
         .recommend-list {
-            margin-top: 20px;
+            margin-top: 40px;
 
             .list-title {
-                height: 65px;
-                line-height: 65px;
+                height: 130px;
+                line-height: 130px;
                 text-align: center;
                 font-size: $font-size-medium;
                 color: $color-theme;
@@ -143,12 +143,16 @@ export default {
                 display: flex;
                 box-sizing: border-box;
                 align-items: center;
-                padding: 0 20px 20px 20px;
+                padding: 0 40px 40px 40px;
 
                 .icon {
-                    flex: 0 0 60px;
-                    width: 60px;
-                    padding-right: 20px;
+                    img {
+                        width 120px
+                        height 120px
+                    }
+                    flex: 0 0 120px;
+                    width: 120px;
+                    padding-right: 40px;
                 }
 
                 .text {
@@ -156,12 +160,12 @@ export default {
                     flex-direction: column;
                     justify-content: center;
                     flex: 1;
-                    line-height: 20px;
+                    line-height: 40px;
                     overflow: hidden;
                     font-size: $font-size-medium;
 
                     .name {
-                        margin-bottom: 10px;
+                        margin-bottom: 20px;
                         color: $color-text;
                     }
 

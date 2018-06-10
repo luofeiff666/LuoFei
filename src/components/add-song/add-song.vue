@@ -145,11 +145,11 @@ export default {
 
     .header {
         position: relative;
-        height: 44px;
+        height: 88px;
         text-align: center;
 
         .title {
-            line-height: 44px;
+            line-height: 88px;
             font-size: $font-size-large;
             color: $color-text;
         }
@@ -157,25 +157,25 @@ export default {
         .close {
             position: absolute;
             top: 0;
-            right: 8px;
+            right: 16px;
 
             .icon-close {
                 display: block;
-                padding: 12px;
-                font-size: 20px;
+                padding: 24px;
+                font-size: 40px;
                 color: $color-theme;
             }
         }
     }
 
     .search-box-wrapper {
-        margin: 20px;
+        margin: 40px;
     }
 
     .shortcut {
         .list-wrapper {
             position: absolute;
-            top: 165px;
+            top: 330px;
             bottom: 0;
             width: 100%;
 
@@ -184,7 +184,7 @@ export default {
                 overflow: hidden;
 
                 .list-inner {
-                    padding: 20px 30px;
+                    padding: 40px 60px;
                 }
             }
         }
@@ -192,20 +192,20 @@ export default {
 
     .search-result {
         position: fixed;
-        top: 124px;
+        top: 248px;
         bottom: 0;
         width: 100%;
     }
 
     .tip-title {
         text-align: center;
-        padding: 18px 0;
+        padding: 36px 0;
         font-size: 0;
 
         .icon-ok {
             font-size: $font-size-medium;
             color: $color-theme;
-            margin-right: 4px;
+            margin-right: 8px;
         }
 
         .text {

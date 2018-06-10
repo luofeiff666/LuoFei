@@ -36,7 +36,7 @@ export default {
     .search-item {
         display: flex;
         align-items: center;
-        height: 40px;
+        height: 80px;
         overflow: hidden;
 
         &.list-enter-active, &.list-leave-active {

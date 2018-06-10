@@ -185,15 +185,15 @@ export default {
 
         .list-header {
             position: relative;
-            padding: 20px 30px 10px 20px;
+            padding: 40px 60px 20px 40px;
 
             .title {
                 display: flex;
                 align-items: center;
 
                 .icon {
-                    margin-right: 10px;
-                    font-size: 30px;
+                    margin-right: 20px;
+                    font-size: 60px;
                     color: $color-theme-d;
                 }
 
@@ -215,14 +215,14 @@ export default {
         }
 
         .list-content {
-            max-height: 240px;
+            max-height: 480px;
             overflow: hidden;
 
             .item {
                 display: flex;
                 align-items: center;
-                height: 40px;
-                padding: 0 30px 0 20px;
+                height: 80px;
+                padding: 0 60px 0 40px;
                 overflow: hidden;
 
                 // 列表动画
@@ -235,8 +235,8 @@ export default {
                 }
 
                 .current {
-                    flex: 0 0 20px;
-                    width: 20px;
+                    flex: 0 0 40px;
+                    width: 40px;
                     font-size: $font-size-small;
                     color: $color-theme-d;
                 }
@@ -250,7 +250,7 @@ export default {
 
                 .like {
                     extend-click();
-                    margin-right: 15px;
+                    margin-right: 30px;
                     font-size: $font-size-small;
                     color: $color-theme;
 
@@ -268,19 +268,19 @@ export default {
         }
 
         .list-operate {
-            width: 140px;
-            margin: 20px auto 30px auto;
+            width: 280px;
+            margin: 40px auto 60px auto;
 
             .add {
                 display: flex;
                 align-items: center;
-                padding: 8px 16px;
+                padding: 16px 32px;
                 border: 1px solid $color-text-l;
-                border-radius: 100px;
+                border-radius: 200px;
                 color: $color-text-l;
 
                 .icon-add {
-                    margin-right: 5px;
+                    margin-right: 10px;
                     font-size: $font-size-small-s;
                 }
 
@@ -292,7 +292,7 @@ export default {
 
         .list-close {
             text-align: center;
-            line-height: 50px;
+            line-height: 100px;
             background: $color-background;
             font-size: $font-size-medium-x;
             color: $color-text-l;

@@ -22,8 +22,8 @@ export default {}
 
 .tab {
     display: flex;
-    height: 44px;
-    line-height: 44px;
+    height: 88px;
+    line-height: 88px;
     font-size: $font-size-medium;
 
     .tab-item {
@@ -33,7 +33,7 @@ export default {}
 
         /* 默认样式 */
         .tab-link {
-            padding-bottom: 5px;
+            padding-bottom: 10px;
             color: $color-text-l;
         }
 
@@ -41,7 +41,7 @@ export default {}
         &.router-link-active {
             .tab-link {
                 color: $color-theme;
-                border-bottom: 2px solid $color-theme;
+                border-bottom: 4px solid $color-theme;
             }
         }
     }

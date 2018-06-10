@@ -7,7 +7,7 @@
         <!-- 背景图 -->
         <div class="background">
           <!-- 铺满 -->
-          <img :src="currentSong.image" width="100%" height="100%">
+          <img :src="currentSong.image">
         </div>
         <!-- 顶部返回按钮 歌名和歌手名  -->
         <div class="top">
@@ -34,7 +34,7 @@
           <scroll @click.stop class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines">
             <div class="lyric-wrapper">
               <div v-if="currentLyric">
-                <p ref="lyricLine" class="text" :class="{'current': currentLineNum ===index}" v-for="(line,index) in currentLyric.lines">{{line.txt}}</p>
+                <p ref="lyricLine" class="text" :class="{'current': currentLineNum ===index}" v-for="(line,index) in currentLyric.lines" :key="index">{{line.txt}}</p>
               </div>
             </div>
           </scroll>
@@ -81,10 +81,10 @@
     </transition>
     <transition name="mini">
       <!-- mini播放器 -->
-      <div class="mini-player" v-show="!fullScreen" @click="open">
+      <div ref="miniPlayer" class="mini-player" v-show="!fullScreen" @click="open">
         <div class="icon">
           <div class="imgWrapper">
-            <img :class="cdCls" width="40" height="40" :src="currentSong.image">
+            <img :class="cdCls" :src="currentSong.image">
           </div>
         </div>
         <div class="text">
@@ -586,23 +586,27 @@ export default {
       height: 100%;
       z-index: -1;
       opacity: 0.6;
-      filter: blur(20px);
+      filter: blur(40px);
+      img {
+        width 100%
+        height 100%
+      }
     }
 
     .top {
       position: relative;
-      margin-bottom: 25px;
+      margin-bottom: 50px;
       z-index: 2;
 
       .back {
         position: absolute;
         top: 0;
-        left: 6px;
+        left: 12px;
         z-index: 50;
 
         .icon-back {
           display: block;
-          padding: 9px;
+          padding: 18px;
           font-size: $font-size-large-x;
           color: $color-theme;
           transform: rotate(-90deg);
@@ -611,10 +615,10 @@ export default {
 
       .cd-off {
         position: absolute;
-        top: -5px;
+        top: -10px;
         left: 50%;
         width: 25%;
-        height: 200px;
+        height: 400px;
         z-index: 40;
         background: url('disc-off.png') no-repeat;
         background-size: contain;
@@ -624,8 +628,8 @@ export default {
     .middle {
       position: fixed;
       width: 100%;
-      top: 40px;
-      bottom: 170px;
+      top: 80px;
+      bottom: 340px;
       white-space: nowrap;
       font-size: 0;
 
@@ -648,14 +652,14 @@ export default {
 
         .singer-title {
           width: 80%;
-          margin: 10px auto 0 auto;
+          margin: 60px auto 0 auto;
           overflow: hidden;
           text-align: center;
 
           .title {
             width: 70%;
-            margin: 0 auto;
-            line-height: 30px;
+            margin: 30px auto;
+            line-height: 60px;
             text-align: center;
             no-wrap();
             font-size: $font-size-large;
@@ -663,7 +667,7 @@ export default {
           }
 
           .subtitle {
-            line-height: 20px;
+            line-height: 40px;
             text-align: center;
             font-size: $font-size-medium;
             color: $color-text-ll;
@@ -672,13 +676,13 @@ export default {
 
         .playing-lyric-wrapper {
           width: 80%;
-          margin: 5px auto 0 auto;
+          margin: 40px auto 0 auto;
           overflow: hidden;
           text-align: center;
 
           .playing-lyric {
-            height: 20px;
-            line-height: 20px;
+            height: 60px;
+            line-height: 60px;
             font-size: $font-size-medium;
             color: $color-text-l;
           }
@@ -699,7 +703,7 @@ export default {
           text-align: center;
 
           .text {
-            line-height: 32px;
+            line-height: 64px;
             color: $color-text-l;
             font-size: $font-size-medium;
 
@@ -710,7 +714,7 @@ export default {
 
           .pure-music {
             padding-top: 50%;
-            line-height: 32px;
+            line-height: 64px;
             color: $color-text-l;
             font-size: $font-size-medium;
           }
@@ -720,7 +724,7 @@ export default {
 
     .bottom {
       position: absolute;
-      bottom: 15px;
+      bottom: 30px;
       width: 100%;
 
       .dot-wrapper {
@@ -730,15 +734,15 @@ export default {
         .dot {
           display: inline-block;
           vertical-align: middle;
-          margin: 0 4px;
-          width: 8px;
-          height: 8px;
+          margin: 0 8px;
+          width: 16px;
+          height: 16px;
           border-radius: 50%;
           background: $color-text-l;
 
           &.active {
-            width: 20px;
-            border-radius: 5px;
+            width: 40px;
+            border-radius: 10px;
             background: $color-text-ll;
           }
         }
@@ -749,23 +753,23 @@ export default {
         align-items: center;
         width: 80%;
         margin: 0px auto;
-        padding: 5px 0;
+        padding: 10px 0;
 
         .time {
           color: $color-text;
           font-size: $font-size-small;
-          flex: 0 0 30px;
-          line-height: 30px;
-          width: 30px;
+          flex: 0 0 60px;
+          line-height: 60px;
+          width: 60px;
 
           &.time-l {
             text-align: left;
-            margin-right: 10px;
+            margin-right: 20px;
           }
 
           &.time-r {
             text-align: right;
-            margin-left: 10px;
+            margin-left: 20px;
           }
         }
 
@@ -787,7 +791,7 @@ export default {
           }
 
           i {
-            font-size: 30px;
+            font-size: 60px;
           }
         }
 
@@ -796,11 +800,11 @@ export default {
         }
 
         .i-center {
-          padding: 0 20px;
+          padding: 0 40px;
           text-align: center;
 
           i {
-            font-size: 40px;
+            font-size: 80px;
           }
         }
 
@@ -826,11 +830,11 @@ export default {
       opacity: 0;
 
       .top {
-        transform: translate3d(0, -100px, 0);
+        transform: translate3d(0, -200px, 0);
       }
 
       .bottom {
-        transform: translate3d(0, 100px, 0);
+        transform: translate3d(0, 200px, 0);
       }
     }
   }
@@ -843,7 +847,7 @@ export default {
     bottom: 0;
     z-index: 180;
     width: 100%;
-    height: 60px;
+    height: 120px;
     background: $color-highlight-background;
 
     &.mini-enter-active, &.mini-leave-active {
@@ -855,16 +859,18 @@ export default {
     }
 
     .icon {
-      flex: 0 0 40px;
-      width: 40px;
-      height: 40px;
-      padding: 0 10px 0 20px;
+      flex: 0 0 80px;
+      width: 80px;
+      height: 80px;
+      padding: 0 20px 0 40px;
 
       .imgWrapper {
         height: 100%;
         width: 100%;
 
         img {
+          height: 100%;
+          width: 100%;
           border-radius: 50%;
 
           &.play {
@@ -883,11 +889,11 @@ export default {
       flex-direction: column;
       justify-content: center;
       flex: 1;
-      line-height: 20px;
+      line-height: 40px;
       overflow: hidden;
 
       .name {
-        margin-bottom: 2px;
+        margin-bottom: 4px;
         no-wrap();
         font-size: $font-size-medium;
         color: $color-text;
@@ -901,20 +907,21 @@ export default {
     }
 
     .control {
-      flex: 0 0 30px;
-      width: 30px;
-      padding: 0 10px;
+      flex: 0 0 60px;
+      width: 60px;
+      padding: 0 20px;
 
       .icon-play-mini, .icon-pause-mini, .icon-playlist {
-        font-size: 30px;
+        font-size: 60px;
         color: $color-theme-d;
       }
 
       .icon-mini {
-        font-size: 32px;
+        font-size: 64px;
         position: absolute;
         left: 0;
         top: 0;
+        z-index: -1
       }
     }
   }

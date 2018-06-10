@@ -17,7 +17,7 @@ export default {}
 
 .m-header {
     position: relative;
-    height: 44px;
+    height: 88px;
     text-align: center;
     color: $color-theme;
     font-size: 0;
@@ -25,18 +25,18 @@ export default {}
     .icon {
         display: inline-block;
         vertical-align: top;
-        margin-top: 6px;
-        width: 30px;
-        height: 32px;
-        margin-right: 9px;
+        margin-top: 12px;
+        width: 60px;
+        height: 64px;
+        margin-right: 18px;
         bg-image('logo');
-        background-size: 30px 32px;
+        background-size: 60px 64px;
     }
 
     .text {
         display: inline-block;
         vertical-align: top;
-        line-height: 40px;
+        line-height: 80px;
         font-size: $font-size-large;
     }
 
@@ -47,8 +47,8 @@ export default {}
 
         .icon-mine {
             display: block;
-            padding: 12px;
-            font-size: 20px;
+            padding: 24px;
+            font-size: 40px;
             color: $color-theme;
         }
     }

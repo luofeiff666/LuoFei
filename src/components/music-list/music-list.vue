@@ -39,7 +39,7 @@ import { mapActions } from 'vuex'
 import { playlistMixin } from 'common/js/mixin'
 
 // title高度 预留高度
-const RESERVED_HEIGHT = 40
+const RESERVED_HEIGHT = 80
 // transform 常量来保存
 const transform = prefixStyle('transform')
 // backdrop 样式
@@ -98,7 +98,7 @@ export default {
   methods: {
     // 当出现播放器那么就使列表高出底部60px
     handlePlaylist(playlist) {
-      const bottom = playlist.length > 0 ? '60px' : ''
+      const bottom = playlist.length > 0 ? '120px' : ''
       this.$refs.list.$el.style.bottom = bottom
       this.$refs.list.refresh()
     },
@@ -194,12 +194,12 @@ export default {
   .back {
     position: absolute;
     top: 0;
-    left: 6px;
+    left: 12px;
     z-index: 50;
 
     .icon-back {
       display: block;
-      padding: 10px;
+      padding: 20px;
       font-size: $font-size-large-x;
       color: $color-theme;
     }
@@ -213,7 +213,7 @@ export default {
     width: 80%;
     no-wrap();
     text-align: center;
-    line-height: 40px;
+    line-height: 80px;
     font-size: $font-size-large;
     color: $color-text;
   }
@@ -228,25 +228,25 @@ export default {
 
     .play-wrapper {
       position: absolute;
-      bottom: 20px;
+      bottom: 40px;
       z-index: 50;
       width: 100%;
 
       .play {
         box-sizing: border-box;
-        width: 135px;
-        padding: 7px 0;
+        width: 270px;
+        padding: 14px 0;
         margin: 0 auto;
         text-align: center;
         border: 1px solid $color-theme;
         color: $color-theme;
-        border-radius: 100px;
+        border-radius: 200px;
         font-size: 0;
 
         .icon-play {
           display: inline-block;
           vertical-align: middle;
-          margin-right: 6px;
+          margin-right: 12px;
           font-size: $font-size-medium-x;
         }
 
@@ -282,7 +282,7 @@ export default {
     background: $color-background;
 
     .song-list-wrapper {
-      padding: 20px 30px;
+      padding: 40px 60px;
     }
 
     .loading-container {

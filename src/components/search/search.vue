@@ -10,7 +10,7 @@
                 <div class="hot-key">
                     <h1 class="title">热门搜索</h1>
                     <ul>
-                        <li @click="addQuery(item.k)" class="item" v-for="item in   hotKey">{{item.k}}</li>
+                        <li @click="addQuery(item.k)" class="item" v-for="(item, index) in hotKey" :key="index">{{item.k}}</li>
                     </ul>
                 </div>
                 <!-- 搜索历史 -->
@@ -21,9 +21,11 @@
                             <i class="icon-clear"></i>
                         </span>
                     </h1>
-                    <search-list @select="addQuery"
-                                 @delete="deleteHistory"   
-                     :searches.stop="searchHistory">
+                    <search-list
+                      @click.stop
+                      @select="addQuery"
+                      @delete="deleteHistory"   
+                      :searches="searchHistory">
                      </search-list>
                 </div>
             </div>    
@@ -67,7 +69,7 @@ export default {
   },
   methods: {
     handlePlaylist(playlist) {
-      const bottom = playlist.length > 0 ? '60px' : 0
+      const bottom = playlist.length > 0 ? '120px' : 0
       this.$refs.shortcutWrapper.style.bottom = bottom
       this.$refs.shortcut.refresh()
       // suggest的refresh是通过组件传递过来的
@@ -127,12 +129,12 @@ export default {
 
 .search {
   .search-box-wrapper {
-    margin: 20px;
+    margin: 40px;
   }
 
   .shortcut-wrapper {
     position: fixed;
-    top: 178px;
+    top: 356px;
     bottom: 0;
     width: 100%;
 
@@ -141,19 +143,19 @@ export default {
       overflow: hidden;
 
       .hot-key {
-        margin: 0 20px 20px 20px;
+        margin: 0 40px 40px 40px;
 
         .title {
-          margin-bottom: 20px;
+          margin-bottom: 40px;
           font-size: $font-size-medium;
           color: $color-text-l;
         }
 
         .item {
           display: inline-block;
-          padding: 5px 10px;
-          margin: 0 20px 10px 0;
-          border-radius: 6px;
+          padding: 10px 20px;
+          margin: 0 40px 20px 0;
+          border-radius: 12px;
           background: $color-highlight-background;
           font-size: $font-size-medium;
           color: $color-text-d;
@@ -162,12 +164,12 @@ export default {
 
       .search-history {
         position: relative;
-        margin: 0 20px;
+        margin: 0 40px;
 
         .title {
           display: flex;
           align-items: center;
-          height: 40px;
+          height: 80px;
           font-size: $font-size-medium;
           color: $color-text-l;
 
@@ -191,7 +193,7 @@ export default {
   .search-result {
     position: fixed;
     width: 100%;
-    top: 178px;
+    top: 356px;
     bottom: 0;
   }
 }

@@ -30,7 +30,7 @@ export default {
   methods: {
     // 当出现播放器那么就使列表高出底部60px
     handlePlaylist(playlist) {
-      const bottom = playlist.length > 0 ? '60px' : ''
+      const bottom = playlist.length > 0 ? '120px' : ''
       this.$refs.singer.style.bottom = bottom
       this.$refs.list.refresh()
     },
@@ -120,7 +120,7 @@ export default {
 
 .singer {
   position: fixed;
-  top: 88px;
+  top: 176px;
   bottom: 0;
   width: 100%;
 }

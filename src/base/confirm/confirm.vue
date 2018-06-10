@@ -80,13 +80,13 @@ export default {
         z-index: 999;
 
         .confirm-content {
-            width: 270px;
-            border-radius: 13px;
+            width: 540px;
+            border-radius: 23px;
             background: $color-highlight-background;
 
             .text {
-                padding: 19px 15px;
-                line-height: 22px;
+                padding: 40px 30px;
+                line-height: 44px;
                 text-align: center;
                 font-size: $font-size-large;
                 color: $color-text-l;
@@ -100,8 +100,8 @@ export default {
 
                 .operate-btn {
                     flex: 1;
-                    line-height: 22px;
-                    padding: 10px 0;
+                    line-height: 44px;
+                    padding: 20px 0;
                     border-top: 1px solid $color-background-d;
                     color: $color-text-d;
 

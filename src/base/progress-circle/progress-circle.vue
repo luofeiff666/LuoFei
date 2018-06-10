@@ -1,7 +1,7 @@
 <template>
     <div class="progress-circle">
         <!-- viewBox 可视大小与圆对应 外层的宽高 -->
-        <svg :width="radius" :height="radius" viewBox="0 0 100 100" version="1.1"
+        <svg viewBox="0 0 100 100" version="1.1"
         xmlns="http://www.w3.org/2000/svg">
         <!-- 内层的圆 半径 坐标 坐标 -->
         <circle class="progress-background" r="50" cx="50" cy="50" fill="transparent"/>
@@ -43,7 +43,10 @@ export default {
 
 .progress-circle {
     position: relative;
-
+    svg {
+      width 64px
+      height 64px
+    }
     circle {
         // 描边的宽度
         stroke-width: 8px;
@@ -52,6 +55,7 @@ export default {
         &.progress-background {
             transform: scale(0.9);
             stroke: $color-theme-d;
+            z-index: -1
         }
 
         &.progress-bar {

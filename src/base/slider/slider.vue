@@ -5,7 +5,7 @@
         </div>
         <div class="dots">
             <!-- :class="active:currnetPageIndex === index 设置currnetPageIndex位置的active样式 -->
-            <span class="dot" v-for="(item,index) in dots" :class="{active:currentPageIndex === index}" @click="clickToPage(index)"></span>    
+            <span class="dot" v-for="(item,index) in dots" :class="{active:currentPageIndex === index}" :key="index" @click="clickToPage(index)"></span>    
         </div>
     </div>
 </template>
@@ -186,22 +186,22 @@ export default {
     position: absolute;
     right: 0;
     left: 0;
-    bottom: 12px;
+    bottom: 24px;
     text-align: center;
     font-size: 0;
 
     .dot {
       display: inline-block;
-      margin: 0 4px;
+      margin: 0 8px;
       width: 8px;
-      height: 8px;
+      height: 16px;
       border-radius: 50%;
       background-color: $color-text-l;
 
       // 当时图片对应当前的dota那么改变样式
       &.active {
-        width: 20px;
-        border-radius: 5px;
+        width: 40px;
+        border-radius: 10px;
         background-color: $color-text-ll;
       }
     }

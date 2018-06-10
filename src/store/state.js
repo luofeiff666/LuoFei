@@ -26,7 +26,9 @@ const state = {
   // 播放历史
   playHistory: loadPlay(),
   // 喜欢的收藏列表
-  favoriteList: loadFavorite()
+  favoriteList: loadFavorite(),
+  // mini
+  miniPlayerheight: 60
 }
 
 export default state

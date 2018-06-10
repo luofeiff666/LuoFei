@@ -6,7 +6,7 @@
     @beforeScroll='listScroll'
     >
         <ul class="suggest-list">
-            <li class="suggest-item" v-for="item in result" @click="selectItem(item)">
+            <li class="suggest-item" v-for="(item, index) in result" @click="selectItem(item)" :key="index">
                 <div class="icon">
                     <i :class="getIconCls(item)"></i>
                 </div>
@@ -187,20 +187,20 @@ export default {
   overflow: hidden;
 
   .suggest-list {
-    padding: 0 30px;
+    padding: 0 60px;
 
     .suggest-item {
       display: flex;
       align-items: center;
-      padding-bottom: 20px;
+      padding-bottom: 40px;
     }
 
     .icon {
-      flex: 0 0 30px;
-      width: 30px;
+      flex: 0 0 60px;
+      width: 60px;
 
       [class^='icon-'] {
-        font-size: 14px;
+        font-size: 28px;
         color: $color-text-d;
       }
     }
