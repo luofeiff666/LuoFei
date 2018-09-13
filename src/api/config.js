@@ -1,6 +1,6 @@
 // 通用的data
 export const commonParams = {
-  g_tk: 5381,
+  g_tk: 480214211,
   inCharset: 'utf-8',
   outCharset: 'utf-8',
   notice: 0,

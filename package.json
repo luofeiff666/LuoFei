@@ -8,7 +8,9 @@
     "dev": "webpack-dev-server --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js && gulp upload"
+    "build": "node build/build.js",
+    "build-upload": "node build/build.js && gulp upload",
+    "upload": "gulp upload"
   },
   "dependencies": {
     "gulp": "^3.9.1",

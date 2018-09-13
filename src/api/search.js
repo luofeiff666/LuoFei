@@ -1,5 +1,6 @@
 import jsonp from 'common/js/jsonp.js'
 import { commonParams, options } from './config'
+import axios from 'axios'
 
 export function getHotKey(w) {
   const url = 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg'
@@ -13,7 +14,7 @@ export function getHotKey(w) {
 }
 
 export function getSearchResult(query, page, zhida, perpage) {
-  const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
+  const url = '/api/getSearch'
 
   const data = Object.assign({}, commonParams, {
     w: query,
@@ -36,5 +37,11 @@ export function getSearchResult(query, page, zhida, perpage) {
     remoteplace: 'txt.mqq.all'
   })
 
-  return jsonp(url, data, options)
+  return axios
+    .get(url, {
+      params: data
+    })
+    .then(res => {
+      return Promise.resolve(res.data)
+    })
 }

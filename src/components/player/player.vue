@@ -659,7 +659,7 @@ export default {
           .title {
             width: 70%;
             margin: 10px auto;
-            line-height: 30px;
+            line-height: 50px;
             text-align: center;
             no-wrap();
             font-size: $font-size-large;

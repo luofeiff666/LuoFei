@@ -97,6 +97,37 @@ apiRouter.get('/getDiscSong', function(req, res) {
       console.log(e)
     })
 })
+// 获取Search
+apiRouter.get('/getSearch', function(req, res) {
+  // 真实的请求的地址
+  var url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
+
+  axios
+    .get(url, {
+      // 修改headers变成和QQ相关的referrer host 欺骗服务器
+      headers: {
+        referer: 'https://c.y.qq.com/',
+        host: 'c.y.qq.com'
+      },
+      // 然后把返回的参数传回给前端
+      params: req.query
+    })
+    .then(response => {
+      var ret = response.data
+      if (typeof ret === 'string') {
+        var reg = /^\w+\(({.+})\)$/
+        var matches = ret.match(reg)
+        if (matches) {
+          ret = JSON.parse(matches[1])
+        }
+        console.log(ret)
+        res.json(ret)
+      }
+    })
+    .catch(e => {
+      console.log(e)
+    })
+})
 
 // 端口
 app.use(express.static('./dist'))
@@ -109,5 +140,5 @@ module.exports = app.listen(port, function(err) {
   if (err) {
     console.log(err)
   }
-  console.log('Listening at http://www.zhangchaoyea.com:' + port + '\n')
+  console.log('Listening at http://music.zhangchaoyea.com:' + port + '\n')
 })
