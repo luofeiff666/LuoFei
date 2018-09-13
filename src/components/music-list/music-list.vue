@@ -39,7 +39,7 @@ import { mapActions } from 'vuex'
 import { playlistMixin } from 'common/js/mixin'
 
 // title高度 预留高度
-const RESERVED_HEIGHT = 80
+const RESERVED_HEIGHT = 104
 // transform 常量来保存
 const transform = prefixStyle('transform')
 // backdrop 样式

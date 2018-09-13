@@ -18,7 +18,7 @@
                 <loading></loading>
             </div>
         </scroll>
-        <router-view></router-view> 
+        <router-view></router-view>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -75,60 +75,61 @@ export default {
 @import '~common/stylus/mixin';
 
 .rank {
-    position: fixed;
-    width: 100%;
-    top: 176px;
-    bottom: 0;
+  position: fixed;
+  width: 100%;
+  top: 176px;
+  bottom: 0;
 
-    .toplist {
-        height: 100%;
+  .toplist {
+    height: 100%;
+    overflow: hidden;
+
+    .item {
+      display: flex;
+      margin: 0 40px;
+      padding-top: 40px;
+      height: 200px;
+
+      &:last-child {
+        padding-bottom: 40px;
+      }
+
+      .icon {
+        img {
+          width: 200px;
+          height: 200px;
+        }
+
+        flex: 0 0 200px;
+        width: 200px;
+        height: 200px;
+      }
+
+      .songlist {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 40px;
+        height: 200px;
         overflow: hidden;
+        background: $color-highlight-background;
+        color: $color-text-d;
+        font-size: $font-size-small;
 
-        .item {
-            display: flex;
-            margin: 0 40px;
-            padding-top: 40px;
-            height: 200px;
-
-            &:last-child {
-                padding-bottom: 40px;
-            }
-
-            .icon {
-                img {
-                    width 200px
-                    height 200px
-                }
-                flex: 0 0 200px;
-                width: 200px;
-                height: 200px;
-            }
-
-            .songlist {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                padding: 0 40px;
-                height: 200px;
-                overflow: hidden;
-                background: $color-highlight-background;
-                color: $color-text-d;
-                font-size: $font-size-small;
-
-                .song {
-                    no-wrap();
-                    line-height: 52px;
-                }
-            }
+        .song {
+          no-wrap();
+          line-height: 52px;
         }
-
-        .loading-container {
-            position: absolute;
-            width: 100%;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+      }
     }
+
+    .loading-container {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
 }
 </style>
