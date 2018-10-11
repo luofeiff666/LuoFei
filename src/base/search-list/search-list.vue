@@ -48,6 +48,7 @@ export default {
         }
 
         .text {
+            font-size: $font-size-small;
             flex: 1;
             color: $color-text-l;
         }
